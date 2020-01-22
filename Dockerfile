@@ -2,7 +2,7 @@ FROM openjdk:8u131-jre
 
 MAINTAINER Richard Chesterwood "contact@virtualpairprogrammers.com"
 
-ADD positionreceiver-0.0.1-SNAPSHOT.jar webapp.jar
+ADD positionreceiver.jar webapp.jar
 
 EXPOSE 8080
 
