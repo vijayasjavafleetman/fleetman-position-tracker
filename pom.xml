@@ -91,7 +91,7 @@
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 				</configuration>
 		</plugin>			
-\
+
 		</plugins>
 		
 		<resources>
