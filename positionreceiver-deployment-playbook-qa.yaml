@@ -1,0 +1,18 @@
+---
+- name: Create pods using deployment 
+  hosts: localhost
+  vars:
+    appName: "positionreceiver" 
+    metaname: "position-tracker"
+  become: true
+  user: root
+  tasks: 
+  - name: test dir
+    command: "pwd"
+  - name: create a deployment
+    command: "kubectl apply -f udeploy.yaml"
+    args:
+      chdir: "/home/ansadmin/jenkins/{{ appName }}-qa/workspace"
+  - name: update deployment with new pods if image updated in docker hub
+    command: "kubectl rollout restart deployment.v1.apps/{{ metaname }}"
+    

@@ -1,0 +1,40 @@
+---
+  - hosts: localhost
+    vars:
+      appName: "positionreceiver"
+    become: true
+    tasks:
+    - name: clean the workspace
+      command: "rm -f *"
+      args:
+        chdir: "/home/ansadmin/jenkins/{{ appName }}/workspace"
+    - name: Download WAR file to the Tomcat webapps directory
+      maven_artifact:
+        group_id: com.virtualpairprogrammers
+        artifact_id: "{{ appName }}"
+        extension: jar
+        repository_url: "{{ ARTIFACTORY_URL }}"
+        dest: "/home/ansadmin/jenkins/{{ appName }}/workspace/{{ appName }}.jar"
+        username: "{{ ARTIFACTORY_USERNAME }}"
+        password: "{{ ARTIFACTORY_PASSWD }}"
+        extension: "jar"
+        version: "{{ ARTIFACT_VERSION }}"
+    - name: building docker image
+      command: "docker build -t {{ appName }} ."
+      args:
+        chdir: "/home/ansadmin/jenkins/{{ appName }}/workspace"
+    - name: tag docker image
+      command: "docker tag {{ appName }} {{ tag }}"
+    - name: push the name to registry
+      command: "docker push {{ tag }}"
+    - name: cleaning
+      command: "{{ item }}"
+      with_items:
+       - "rm -f *"
+       - "rm -rf *"
+       - "docker rmi {{ appName }} {{ tag }}"
+       - "docker system prune -f -a"
+      args:
+        chdir: "/home/ansadmin/jenkins/{{ appName }}/workspace"
+      ignore_errors: yes
+  
