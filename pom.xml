@@ -25,6 +25,19 @@
   <tag>HEAD</tag>
   </scm>	
 
+<distributionManagement>
+  <repository>
+    <id>release</id>
+    <name>releases</name>
+    <url>http://localhost:7071/artifactory/libs-release-local</url>
+  </repository>
+  <snapshotRepository>
+    <id>snapshot</id>
+    <name>snapshots</name>
+    <url>http://localhost:7071/artifactory/libs-snapshot-local</url>
+  </snapshotRepository>
+</distributionManagement>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -78,7 +91,7 @@
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 				</configuration>
 		</plugin>			
-
+\
 		</plugins>
 		
 		<resources>
